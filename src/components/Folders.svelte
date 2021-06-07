@@ -3,42 +3,71 @@
 
     //get from local store 
     let folders = [
-        'default',
-        '花環磨血'
+        {
+            name: 'folder 1',
+            teams: [
+                {
+                    name: 'team 1',
+                },
+                {
+                    name: 'team 2',
+                },
+            ]
+        },
+        {
+            name: '花環磨血',
+            teams: [
+                {
+                    name: 'team 3',
+                },
+                {
+                    name: 'team 4',
+                },
+            ]
+        },
     ]
     const addFolderHandler = () => {
-        let cantUseDefaultName = true;
-        let index = 0;
-        while(cantUseDefaultName) {
-            const newFolderName = `default${index === 0 ? '' : `_${index}`}`;
-            if(!folders.find(name => name === newFolderName)) {
-                folders = [newFolderName, ...folders]
-                cantUseDefaultName = false;
-            } else {
-                index++
-            }
-        }
+        folders = [...folders, {name: 'default', teams: []}]
     }
-    const renameFolderHandler = (i, value) => {
+    const deleteFolderHandler = (i) => {
+        folders = folders.filter((item, index) => i !== index);
+    }
+    const setFolderHandler = (updatedFolder, i) => {
         folders = folders.map((folder, index) => {
             if(index === i) {
-                return value
+                return updatedFolder
             } else {
                 return folder
             }
         })
     }
-    const deleteFolderHandler = (i) => {
-        folders = folders.filter((item, index) => i !== index);
+    const moveTeamHandler = (team, newIdx) => {
+        folders = folders.map((folder, index) => {
+            if(index === newIdx) {
+                return {
+                    ...folder,
+                    teams: [
+                        ...folder.teams,
+                        team
+                    ]
+                }
+            } else {
+                return folder
+            }
+        })
     }
 </script>
 
 <div>
     <button class="btn btn-primary" on:click={addFolderHandler}>Add Folder</button>
-    <!-- add folder btn -->
     {#each folders as folder, i}
-        <!-- expandable folder -->
-        <!-- delete/edit folder btn -->
-        <Folder folder={folder} index={i} deleteHandler={deleteFolderHandler} renameHandler={renameFolderHandler} />
+        <Folder 
+            folders={folders} 
+            name={folder.name} 
+            teams={folder.teams} 
+            index={i} 
+            deleteHandler={deleteFolderHandler} 
+            setHandler={setFolderHandler}
+            moveTeamHandler={moveTeamHandler} />
     {/each}
 </div>
