@@ -6,10 +6,8 @@
 	<h1 class="text-center">Pokemon Team Builder</h1>
 </div>
 
-<!-- TEAM Folders -->
-<!-- POKEMONS -->
 <div class='container'>
-	<Folders/>
+	<Folders />
 </div>
 
 <style>

@@ -1,6 +1,15 @@
 <script>
     import Folder from './Folder.svelte'
+    import EditTeam from './EditTeam.svelte'
 
+    let showFolders = true;
+    let nowTeam = {};
+    const toggleShowFoldersHandler = (show, folderIdx, teamIdx) => {
+        showFolders = show;
+        if(!showFolders) {
+            nowTeam = folders.find((folder, i) => i === folderIdx).teams.find((team, i) => i === teamIdx)
+        }
+    }
     //get from local store 
     let folders = [
         {
@@ -59,15 +68,20 @@
 </script>
 
 <div>
-    <button class="btn btn-primary" on:click={addFolderHandler}>Add Folder</button>
-    {#each folders as folder, i}
-        <Folder 
-            folders={folders} 
-            name={folder.name} 
-            teams={folder.teams} 
-            index={i} 
-            deleteHandler={deleteFolderHandler} 
-            setHandler={setFolderHandler}
-            moveTeamHandler={moveTeamHandler} />
-    {/each}
+    {#if showFolders} 
+        <button class="btn btn-primary" on:click={addFolderHandler}>Add Folder</button>
+        {#each folders as folder, i}
+            <Folder 
+                folders={folders} 
+                name={folder.name} 
+                teams={folder.teams} 
+                index={i} 
+                deleteHandler={deleteFolderHandler} 
+                setHandler={setFolderHandler}
+                moveTeamHandler={moveTeamHandler}
+                toggleShowFoldersHandler={toggleShowFoldersHandler} />
+        {/each}
+    {:else}
+        <EditTeam nowTeam={nowTeam} />
+    {/if}
 </div>

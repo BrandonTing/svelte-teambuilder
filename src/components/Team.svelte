@@ -5,14 +5,10 @@
     export let setHandler;
     export let folders;
     export let moveTeamHandler;
+    export let toggleShowDetailHandler;
     let showRename = false;
     let showFoldersList = false;
     let teamName = name;
-
-    const toggleEditHandler = () => {
-        // 之後做edit tab
-        console.log('edit')
-    }
     const toggleRenameHandler = () => {
         showRename = !showRename;
         name = folder;
@@ -60,7 +56,7 @@
         <!-- members -->
         <!-- btns -->
         <div class="team-btns position-absolute">
-            <button class="btn btn-secondary" on:click={toggleEditHandler}>Edit</button>
+            <button class="btn btn-secondary" on:click={toggleShowDetailHandler}>Edit</button>
             {#if showRename}
                 <input type="text" placeholder="Username" bind:value={teamName}>
                 <button class="btn btn-primary" on:click={() => {renameHandler(index, teamName);showRename = !showRename}}>Confirm</button>

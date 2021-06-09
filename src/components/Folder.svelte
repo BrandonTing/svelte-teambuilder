@@ -7,6 +7,7 @@
     export let setHandler;
     export let folders;
     export let moveTeamHandler;
+    export let toggleShowFoldersHandler;
     let folderName = name;
     let showRename = false;
     const toggleExpandHandler = (e) => {
@@ -95,7 +96,8 @@
                     index={i} 
                     setHandler={setTeamHandler} 
                     deleteHandler={deleteTeamHandler}
-                    moveTeamHandler={moveTeamHandler} />
+                    moveTeamHandler={moveTeamHandler}
+                    toggleShowDetailHandler={() => toggleShowFoldersHandler(false, index, i)} />
             {/each}
         </div>
     </div>
