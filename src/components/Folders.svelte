@@ -17,6 +17,18 @@
             teams: [
                 {
                     name: 'team 1',
+                    pokemons: [
+                        {
+                            name: 'Scizor',
+                            ability: 'Technician',
+                            item: 'Choice Band',
+                            moves: [
+                                'Bullet Punch',
+                                'Dual Wingbeat',
+                                'Superpower',
+                            ]
+                        }
+                    ]
                 },
                 {
                     name: 'team 2',
@@ -82,6 +94,6 @@
                 toggleShowFoldersHandler={toggleShowFoldersHandler} />
         {/each}
     {:else}
-        <EditTeam nowTeam={nowTeam} />
+        <EditTeam nowTeam={nowTeam} backFoldersHandler={() => toggleShowFoldersHandler(true)} />
     {/if}
 </div>
