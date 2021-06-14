@@ -35,7 +35,13 @@
     const addTeamHandler = () => {
         const updatedFolder = {
             name, 
-            teams: [{name: 'untitled'}, ...teams]
+            teams: [
+                {
+                    name: 'untitled',
+                    pokemons: []
+                }, 
+                ...teams
+            ]
         }
         setHandler(updatedFolder, index)
     };

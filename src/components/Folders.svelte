@@ -3,11 +3,17 @@
     import EditTeam from './EditTeam.svelte'
 
     let showFolders = true;
-    let nowTeam = {};
+    let nowTeam = {
+        folder: 0,
+        team: 0
+    };
     const toggleShowFoldersHandler = (show, folderIdx, teamIdx) => {
         showFolders = show;
         if(!showFolders) {
-            nowTeam = folders.find((folder, i) => i === folderIdx).teams.find((team, i) => i === teamIdx)
+            nowTeam = {
+                folder: folderIdx,
+                team: teamIdx,
+            }
         }
     }
     //get from local store 
@@ -26,12 +32,18 @@
                                 'Bullet Punch',
                                 'Dual Wingbeat',
                                 'Superpower',
-                            ]
+                            ],
+                            ev: {
+                                ATK: 252,
+                                HP: 252,
+                                SPD: 4
+                            }
                         }
                     ]
                 },
                 {
                     name: 'team 2',
+                    pokemons: []
                 },
             ]
         },
@@ -40,9 +52,11 @@
             teams: [
                 {
                     name: 'team 3',
+                    pokemons: []
                 },
                 {
                     name: 'team 4',
+                    pokemons: []
                 },
             ]
         },
@@ -77,6 +91,59 @@
             }
         })
     }
+    const addPokemonHandler = () => {
+        folders = folders.map(((folder, i) => {
+            if(i !== nowTeam.folder) {
+                return folder
+            } else {
+                const updatedTeam = folder.teams.map((team, i) => {
+                    if(i !== nowTeam.team) {
+                        return team 
+                    } else {
+                        return {
+                            ...team,
+                            pokemons: [
+                                ...team.pokemons,
+                                {
+                                    name: '',
+                                    ability: '',
+                                    item: '',
+                                    moves: [],
+                                    ev: {}
+                                }
+                            ]
+                        }
+                    }
+                })
+                return {
+                    ...folder,
+                    teams: updatedTeam
+                }
+            }
+        }))
+    }
+    const deletePokemonHandler = (i) => {
+        folders = folders.map(((folder, i) => {
+            if(i !== nowTeam.folder) {
+                return folder
+            } else {
+                const updatedTeam = folder.teams.map((team, i) => {
+                    if(i !== nowTeam.team) {
+                        return team 
+                    } else {
+                        return {
+                            ...team,
+                            pokemons: team.pokemons.filter((pokemon, idx) => idx !== i)
+                        }
+                    }
+                })
+                return {
+                    ...folder,
+                    teams: updatedTeam
+                }
+            }
+        }))
+    }
 </script>
 
 <div>
@@ -94,6 +161,10 @@
                 toggleShowFoldersHandler={toggleShowFoldersHandler} />
         {/each}
     {:else}
-        <EditTeam nowTeam={nowTeam} backFoldersHandler={() => toggleShowFoldersHandler(true)} />
+        <EditTeam 
+            nowTeam={folders.find((folder, i) => i === nowTeam.folder).teams.find((team, i) => i === nowTeam.team)} 
+            backFoldersHandler={() => toggleShowFoldersHandler(true)} 
+            addPokemonHandler={addPokemonHandler}
+            deletePokemonHandler={deletePokemonHandler} />
     {/if}
 </div>
