@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import Folder from './Folder.svelte'
     import EditTeam from './EditTeam.svelte'
 
@@ -17,50 +18,12 @@
         }
     }
     //get from local store 
-    let folders = [
-        {
-            name: 'folder 1',
-            teams: [
-                {
-                    name: 'team 1',
-                    pokemons: [
-                        {
-                            name: 'Scizor',
-                            ability: 'Technician',
-                            item: 'Choice Band',
-                            moves: [
-                                'Bullet Punch',
-                                'Dual Wingbeat',
-                                'Superpower',
-                            ],
-                            ev: {
-                                ATK: 252,
-                                HP: 252,
-                                SPD: 4
-                            }
-                        }
-                    ]
-                },
-                {
-                    name: 'team 2',
-                    pokemons: []
-                },
-            ]
-        },
-        {
-            name: '花環磨血',
-            teams: [
-                {
-                    name: 'team 3',
-                    pokemons: []
-                },
-                {
-                    name: 'team 4',
-                    pokemons: []
-                },
-            ]
-        },
-    ]
+    let folders = [];
+    $: localStorage.setItem('folders', JSON.stringify(folders))
+    onMount(() => {
+        const existedFolders = localStorage.getItem('folders');
+        folders = JSON.parse(existedFolders);
+    });
     const addFolderHandler = () => {
         folders = [...folders, {name: 'default', teams: []}]
     }
