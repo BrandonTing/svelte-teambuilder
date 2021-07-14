@@ -1,5 +1,5 @@
 <script>
-    export let name;
+    export let team;
     export let index;
     export let deleteHandler;
     export let setHandler;
@@ -8,10 +8,9 @@
     export let toggleShowDetailHandler;
     let showRename = false;
     let showFoldersList = false;
-    let teamName = name;
+    let teamName = team.name;
     const toggleRenameHandler = () => {
         showRename = !showRename;
-        name = folder;
     }
     const toggleMoveHandler = () => {
         // 移到其他folder
@@ -19,6 +18,7 @@
     }
     const renameHandler = () => {
         const updatedTeam = {
+            ...team,
             name: teamName,
         }
         setHandler(updatedTeam, index)
@@ -52,7 +52,7 @@
 
 <div class="card position-relative">
     <div class="card-body">
-        <h5 class="card-title">{name}</h5>
+        <h5 class="card-title">{team.name}</h5>
         <!-- members -->
         <!-- btns -->
         <div class="team-btns position-absolute">

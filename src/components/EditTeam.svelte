@@ -1,9 +1,51 @@
 <script>
     import Pokemon from './Pokemon.svelte';
+    export let nationalDex;
     export let nowTeam;
     export let backFoldersHandler;
-    export let addPokemonHandler;
-    export let deletePokemonHandler;
+    // export let addPokemonHandler;
+    // export let deletePokemonHandler;
+    export let updateTeamHandler;
+    const addPokemonHandler = () => {
+        console.log(nowTeam)
+        const updatedTeam = {
+            ...nowTeam,
+            pokemons: [
+                ...nowTeam.pokemons,
+                {
+                    name: '',
+                    ability: '',
+                    item: '',
+                    moves: [],
+                    ev: {},
+                    spriteUrl: '',
+                    base_stats: {},
+                    iv: {},
+                }
+            ]
+        };
+        updateTeamHandler(updatedTeam);
+    }
+    const deletePokemonHandler = (i) => {
+        const updatedTeam = {
+            ...nowTeam,
+            pokemons: nowTeam.pokemons.filter((pokemon, idx) => idx !== i)
+        };
+        updateTeamHandler(updatedTeam);
+    }
+    const updatePokemonHandler = (idx, updatedPokemon) => {
+        const updatedTeam = {
+            ...nowTeam, 
+            pokemons: nowTeam.pokemons.map((pokemon, i) => {
+                if(i !== idx) {
+                    return pokemon 
+                } else {
+                    return updatedPokemon
+                }
+            })
+        }
+        updateTeamHandler(updatedTeam)
+    }
 </script>
 
 <style>
@@ -15,5 +57,5 @@
     <button class="btn btn-primary" on:click={addPokemonHandler}>Add Pokemon</button>
 </h5>
 {#each nowTeam.pokemons as pokemon, i}
-    <Pokemon pokemon={pokemon} deletePokemonHandler={() => deletePokemonHandler(i)} />
+    <Pokemon nationalDex={nationalDex} pokemon={pokemon} deletePokemonHandler={() => deletePokemonHandler(i)} updateHandler={(updatedPokemon) => updatePokemonHandler(i, updatedPokemon)} />
 {/each}

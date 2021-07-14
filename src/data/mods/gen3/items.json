@@ -1,0 +1,139 @@
+{
+  "Items": {
+    "aguavberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "apicotberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "berryjuice": {
+      "inherit": true,
+      "onResidualOrder": 5,
+      "isNonstandard": "Unobtainable"
+    },
+    "blackbelt": {
+      "inherit": true
+    },
+    "blackglasses": {
+      "inherit": true
+    },
+    "charcoal": {
+      "inherit": true
+    },
+    "dragonfang": {
+      "inherit": true
+    },
+    "enigmaberry": {
+      "name": "Enigma Berry",
+      "spritenum": 124,
+      "isBerry": true,
+      "num": 208,
+      "gen": 3,
+      "isNonstandard": "Unobtainable"
+    },
+    "figyberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "ganlonberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "hardstone": {
+      "inherit": true
+    },
+    "iapapaberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "kingsrock": {
+      "inherit": true
+    },
+    "lansatberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "laxincense": {
+      "inherit": true
+    },
+    "liechiberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "lightball": {
+      "inherit": true
+    },
+    "magnet": {
+      "inherit": true
+    },
+    "magoberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "metalcoat": {
+      "inherit": true
+    },
+    "miracleseed": {
+      "inherit": true
+    },
+    "mysticwater": {
+      "inherit": true
+    },
+    "nevermeltice": {
+      "inherit": true
+    },
+    "oranberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "petayaberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "poisonbarb": {
+      "inherit": true
+    },
+    "quickclaw": {
+      "inherit": true
+    },
+    "salacberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "seaincense": {
+      "inherit": true
+    },
+    "sharpbeak": {
+      "inherit": true
+    },
+    "silkscarf": {
+      "inherit": true
+    },
+    "silverpowder": {
+      "inherit": true
+    },
+    "sitrusberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "softsand": {
+      "inherit": true
+    },
+    "spelltag": {
+      "inherit": true
+    },
+    "starfberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    },
+    "twistedspoon": {
+      "inherit": true
+    },
+    "wikiberry": {
+      "inherit": true,
+      "onResidualOrder": 5
+    }
+  }
+}

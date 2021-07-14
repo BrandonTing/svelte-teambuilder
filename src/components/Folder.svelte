@@ -98,7 +98,7 @@
             {#each teams as team, i}
                 <Team 
                     folders={folders} 
-                    name={team.name} 
+                    team={team} 
                     index={i} 
                     setHandler={setTeamHandler} 
                     deleteHandler={deleteTeamHandler}

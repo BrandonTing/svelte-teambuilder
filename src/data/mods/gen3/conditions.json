@@ -1,0 +1,15 @@
+{
+  "Conditions": {
+    "slp": {
+      "name": "slp",
+      "effectType": "Status",
+      "onBeforeMovePriority": 10
+    },
+    "frz": {
+      "inherit": true
+    },
+    "sandstorm": {
+      "inherit": true
+    }
+  }
+}

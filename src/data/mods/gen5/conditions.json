@@ -1,0 +1,18 @@
+{
+  "Conditions": {
+    "slp": {
+      "inherit": true
+    },
+    "partiallytrapped": {
+      "inherit": true
+    },
+    "stall": {
+      "duration": 2,
+      "counterMax": 256
+    },
+    "gem": {
+      "duration": 1,
+      "affectsFainted": true
+    }
+  }
+}

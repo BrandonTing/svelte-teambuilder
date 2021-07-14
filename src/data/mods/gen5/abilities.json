@@ -1,0 +1,34 @@
+{
+  "Abilities": {
+    "anticipation": {
+      "inherit": true
+    },
+    "frisk": {
+      "inherit": true
+    },
+    "infiltrator": {
+      "inherit": true,
+      "rating": 1.5
+    },
+    "keeneye": {
+      "inherit": true
+    },
+    "oblivious": {
+      "inherit": true,
+      "rating": 0.5
+    },
+    "overcoat": {
+      "inherit": true,
+      "rating": 0.5
+    },
+    "sapsipper": {
+      "inherit": true
+    },
+    "serenegrace": {
+      "inherit": true
+    },
+    "soundproof": {
+      "inherit": true
+    }
+  }
+}

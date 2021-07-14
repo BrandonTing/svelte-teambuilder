@@ -1,0 +1,16 @@
+{
+  "Conditions": {
+    "brn": {
+      "inherit": true
+    },
+    "par": {
+      "inherit": true
+    },
+    "confusion": {
+      "inherit": true
+    },
+    "choicelock": {
+      "inherit": true
+    }
+  }
+}

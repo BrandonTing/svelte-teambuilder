@@ -1,0 +1,84 @@
+{
+  "Moves": {
+    "bind": {
+      "inherit": true
+    },
+    "clamp": {
+      "inherit": true
+    },
+    "counter": {
+      "inherit": true,
+      "ignoreImmunity": true,
+      "willCrit": false,
+      "basePower": 1
+    },
+    "firespin": {
+      "inherit": true
+    },
+    "haze": {
+      "inherit": true
+    },
+    "highjumpkick": {
+      "inherit": true,
+      "desc": "If this attack misses the target, the user takes 1 HP of damage.",
+      "shortDesc": "User takes 1 HP damage it would have dealt if miss."
+    },
+    "hyperbeam": {
+      "inherit": true
+    },
+    "jumpkick": {
+      "inherit": true,
+      "desc": "If this attack misses the target, the user 1HP of damage.",
+      "shortDesc": "User takes 1 HP damage if miss."
+    },
+    "leechseed": {
+      "inherit": true,
+      "condition": {
+        "onAfterMoveSelfPriority": 1
+      }
+    },
+    "psywave": {
+      "inherit": true,
+      "basePower": 1
+    },
+    "rage": {
+      "inherit": true,
+      "self": {
+        "volatileStatus": "rage"
+      },
+      "condition": {
+        "duration": 255,
+        "onLockMove": "rage"
+      }
+    },
+    "recover": {
+      "inherit": true,
+      "heal": null
+    },
+    "rest": {
+      "inherit": true
+    },
+    "softboiled": {
+      "inherit": true,
+      "heal": null
+    },
+    "substitute": {
+      "inherit": true,
+      "condition": {
+        "onTryHitPriority": -1
+      },
+      "secondary": null,
+      "target": "self",
+      "type": "Normal"
+    },
+    "struggle": {
+      "inherit": true,
+      "ignoreImmunity": {
+        "Normal": true
+      }
+    },
+    "wrap": {
+      "inherit": true
+    }
+  }
+}

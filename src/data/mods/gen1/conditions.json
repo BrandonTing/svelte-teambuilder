@@ -1,0 +1,65 @@
+{
+  "Conditions": {
+    "brn": {
+      "name": "brn",
+      "effectType": "Status",
+      "onAfterMoveSelfPriority": 2
+    },
+    "par": {
+      "name": "par",
+      "effectType": "Status",
+      "onBeforeMovePriority": 2
+    },
+    "slp": {
+      "name": "slp",
+      "effectType": "Status",
+      "onBeforeMovePriority": 10
+    },
+    "frz": {
+      "name": "frz",
+      "effectType": "Status",
+      "onBeforeMovePriority": 10
+    },
+    "psn": {
+      "name": "psn",
+      "effectType": "Status",
+      "onAfterMoveSelfPriority": 2
+    },
+    "tox": {
+      "inherit": true,
+      "onAfterMoveSelfPriority": 2
+    },
+    "confusion": {
+      "name": "confusion",
+      "onBeforeMovePriority": 3
+    },
+    "flinch": {
+      "name": "flinch",
+      "duration": 1,
+      "onBeforeMovePriority": 4
+    },
+    "trapped": {
+      "name": "trapped",
+      "noCopy": true
+    },
+    "partiallytrapped": {
+      "name": "partiallytrapped",
+      "duration": 2,
+      "onBeforeMovePriority": 4
+    },
+    "partialtrappinglock": {
+      "name": "partialtrappinglock"
+    },
+    "mustrecharge": {
+      "inherit": true
+    },
+    "lockedmove": {
+      "inherit": true
+    },
+    "stall": {
+      "name": "stall",
+      "duration": 2,
+      "counterMax": 256
+    }
+  }
+}

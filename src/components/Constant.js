@@ -2,27 +2,27 @@ import { readable } from 'svelte/store';
 
 export const stats = readable({
     HP: {
-        code: 'HP',
-        text: 'HP',
+        code: 'hp',
+        text: 'hp',
     },
     ATK: {
-        code: 'ATK',
-        text: 'Attack',
+        code: 'atk',
+        text: 'attack',
     },
     DEF: {
-        code: 'DEF',
-        text: 'Defense',
+        code: 'def',
+        text: 'defense',
     },
     SPA: {
-        code: 'SPA',
-        text: 'Special Attack',
+        code: 'spa',
+        text: 'special-attack',
     },
     SPD: {
-        code: 'SPD',
-        text: 'Special Defense',
+        code: 'spd',
+        text: 'special-defense',
     },
     SPE: {
-        code: 'SPE',
-        text: 'Speed',
+        code: 'spe',
+        text: 'speed',
     },
 })

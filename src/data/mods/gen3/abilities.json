@@ -1,0 +1,55 @@
+{
+  "Abilities": {
+    "cutecharm": {
+      "inherit": true
+    },
+    "effectspore": {
+      "inherit": true
+    },
+    "flamebody": {
+      "inherit": true
+    },
+    "flashfire": {
+      "inherit": true
+    },
+    "intimidate": {
+      "inherit": true
+    },
+    "lightningrod": {
+      "name": "Lightning Rod",
+      "rating": 0,
+      "num": 32
+    },
+    "minus": {
+      "inherit": true
+    },
+    "plus": {
+      "inherit": true
+    },
+    "poisonpoint": {
+      "inherit": true
+    },
+    "pressure": {
+      "inherit": true
+    },
+    "roughskin": {
+      "inherit": true
+    },
+    "shadowtag": {
+      "inherit": true
+    },
+    "static": {
+      "inherit": true
+    },
+    "trace": {
+      "inherit": true
+    },
+    "truant": {
+      "inherit": true,
+      "onResidualOrder": 27
+    },
+    "voltabsorb": {
+      "inherit": true
+    }
+  }
+}

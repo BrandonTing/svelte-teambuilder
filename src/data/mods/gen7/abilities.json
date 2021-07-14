@@ -1,0 +1,39 @@
+{
+  "Abilities": {
+    "disguise": {
+      "inherit": true
+    },
+    "innerfocus": {
+      "inherit": true,
+      "rating": 1
+    },
+    "intimidate": {
+      "inherit": true,
+      "rating": 4
+    },
+    "moody": {
+      "inherit": true
+    },
+    "oblivious": {
+      "inherit": true
+    },
+    "owntempo": {
+      "inherit": true
+    },
+    "rattled": {
+      "name": "Rattled",
+      "rating": 1.5,
+      "num": 155
+    },
+    "scrappy": {
+      "inherit": true
+    },
+    "soundproof": {
+      "inherit": true
+    },
+    "technician": {
+      "inherit": true,
+      "onBasePowerPriority": 19
+    }
+  }
+}

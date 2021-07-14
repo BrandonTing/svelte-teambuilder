@@ -2,7 +2,10 @@
     import { onMount } from "svelte";
     import Folder from './Folder.svelte'
     import EditTeam from './EditTeam.svelte'
-
+    import * as dex from '../data/pokedex.json'
+    const nationalDex = dex.Pokedex;
+    console.log(dex)
+    console.log(nationalDex)
     let showFolders = true;
     let nowTeam = {
         folder: 0,
@@ -22,8 +25,9 @@
     $: localStorage.setItem('folders', JSON.stringify(folders))
     onMount(() => {
         const existedFolders = localStorage.getItem('folders');
-        folders = JSON.parse(existedFolders);
+        folders = JSON.parse(existedFolders); 
     });
+
     const addFolderHandler = () => {
         folders = [...folders, {name: 'default', teams: []}]
     }
@@ -54,58 +58,24 @@
             }
         })
     }
-    const addPokemonHandler = () => {
-        folders = folders.map(((folder, i) => {
+    const updateTeamHandler = (updatedTeam) => {
+        folders = folders.map((folder, i) => {
             if(i !== nowTeam.folder) {
                 return folder
             } else {
-                const updatedTeam = folder.teams.map((team, i) => {
+                const updatedTeams = folder.teams.map((team, i) => {
                     if(i !== nowTeam.team) {
                         return team 
                     } else {
-                        return {
-                            ...team,
-                            pokemons: [
-                                ...team.pokemons,
-                                {
-                                    name: '',
-                                    ability: '',
-                                    item: '',
-                                    moves: [],
-                                    ev: {}
-                                }
-                            ]
-                        }
+                        return updatedTeam
                     }
                 })
                 return {
                     ...folder,
-                    teams: updatedTeam
-                }
+                    teams: updatedTeams
+                }          
             }
-        }))
-    }
-    const deletePokemonHandler = (i) => {
-        folders = folders.map(((folder, i) => {
-            if(i !== nowTeam.folder) {
-                return folder
-            } else {
-                const updatedTeam = folder.teams.map((team, i) => {
-                    if(i !== nowTeam.team) {
-                        return team 
-                    } else {
-                        return {
-                            ...team,
-                            pokemons: team.pokemons.filter((pokemon, idx) => idx !== i)
-                        }
-                    }
-                })
-                return {
-                    ...folder,
-                    teams: updatedTeam
-                }
-            }
-        }))
+        })
     }
 </script>
 
@@ -125,9 +95,9 @@
         {/each}
     {:else}
         <EditTeam 
+            nationalDex={nationalDex}
             nowTeam={folders.find((folder, i) => i === nowTeam.folder).teams.find((team, i) => i === nowTeam.team)} 
             backFoldersHandler={() => toggleShowFoldersHandler(true)} 
-            addPokemonHandler={addPokemonHandler}
-            deletePokemonHandler={deletePokemonHandler} />
+            updateTeamHandler={updateTeamHandler} />
     {/if}
 </div>
