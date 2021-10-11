@@ -9,7 +9,6 @@
     let pokemonMoves = {};
     let searchList = [];
     let searchType = '';
-    let curPokemonData;
     let curMoveIdx = 0;
     Array.from({length: 4}, (v, i) => i + 1).forEach((key, idx) => {
         pokemonMoves[key] = pokemon.moves[idx] || ''
@@ -26,9 +25,10 @@
         searchType = 'name';
         searchList = Object.values(nationalDex).filter(pokemon => pokemon.name.toLowerCase().includes(e.target.value.toLowerCase()))
     }
-    const searchAbilityHandler = () => {
+    const searchAbilityHandler = async () => {
+        const curPokemon = Object.values(nationalDex).find(mon => mon.name.toLowerCase().includes(pokemon.name.toLowerCase()))
         searchType = 'ability';        
-        searchList = Object.values(curPokemonData.abilities).map(abi => {
+        searchList = Object.values(curPokemon.abilities).map(abi => {
             return {name: abi}
         });
     }
@@ -73,7 +73,6 @@
     const selectHandler = async (selected) => {
         switch(searchType) {
             case 'name':
-                curPokemonData = selected;
                 const {name, baseStats } = selected
                 let stats = {}
                 let iv = {};
