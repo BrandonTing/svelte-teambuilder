@@ -25,7 +25,7 @@
     }
     const moveHandler = (newFolderIdx) => {
         deleteHandler(index);
-        moveTeamHandler({name}, newFolderIdx);
+        moveTeamHandler({name: teamName}, newFolderIdx);
         toggleMoveHandler();
     }
 </script>
@@ -73,5 +73,10 @@
                 {/each}
             </ul>
         {/if}
+        <div class='icon-container'>
+            {#each team.pokemons as pokemon}
+                <img src={pokemon.iconUrl} alt={pokemon.name}>
+            {/each}
+        </div>
     </div>
 </div>

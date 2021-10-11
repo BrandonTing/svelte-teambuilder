@@ -7,7 +7,6 @@
     // export let deletePokemonHandler;
     export let updateTeamHandler;
     const addPokemonHandler = () => {
-        console.log(nowTeam)
         const updatedTeam = {
             ...nowTeam,
             pokemons: [
@@ -16,11 +15,17 @@
                     name: '',
                     ability: '',
                     item: '',
-                    moves: [],
-                    ev: {},
+                    moves: {
+                        1: '',
+                        2: '',
+                        3: '',
+                        4: '',
+                    },
                     spriteUrl: '',
-                    base_stats: {},
+                    baseStats,
+                    ev: {},
                     iv: {},
+                    stats: {},
                 }
             ]
         };

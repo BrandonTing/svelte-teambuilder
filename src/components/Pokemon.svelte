@@ -1,5 +1,7 @@
 <script>
     import { stats } from './Constant.js'
+    import * as items from '../data/items.json'
+    import * as moves from '../data/moves.json'
     export let pokemon;
     export let deletePokemonHandler;
     export let nationalDex;
@@ -8,9 +10,18 @@
     let searchList = [];
     let searchType = '';
     let curPokemonData;
+    let curMoveIdx = 0;
     Array.from({length: 4}, (v, i) => i + 1).forEach((key, idx) => {
         pokemonMoves[key] = pokemon.moves[idx] || ''
     });
+    // [(種族值×2+個體值+努力值÷4)×Lv÷100]+10+Lv
+    const getHp = (baseStats, ev, iv) => {
+        return Math.floor((baseStats.hp*2 + iv.hp + Math.floor(ev.hp/4))/2) + 10 + 50;
+    }
+    // {[(種族值×2+個體值+努力值÷4)×Lv÷100]+5}×性格補正(1.1、1.0、0.9)
+    const getStat = (baseStats, ev, iv, code, natureModify = 1.0) => {
+        return Math.floor((Math.floor((baseStats[code]*2 + iv[code] + Math.floor(ev[code]/4))/2) + 5)*natureModify);
+    }
     const searchPokemonHandler = (e) => {
         searchType = 'name';
         searchList = Object.values(nationalDex).filter(pokemon => pokemon.name.toLowerCase().includes(e.target.value.toLowerCase()))
@@ -21,6 +32,15 @@
             return {name: abi}
         });
     }
+    const searchItemsHandler = (e) => {
+        searchType = 'item';
+        searchList = Object.values(items.Items).filter(item => item.name.toLowerCase().includes(e.target.value.toLowerCase()))
+    }
+    const searchMovesHandler = (e, moveIdx) => {
+        curMoveIdx = moveIdx
+        searchType = 'moves';
+        searchList = Object.values(moves.Moves).filter(item => item.name.toLowerCase().includes(e.target.value.toLowerCase()))
+    }
     const updatePokemonHandler = (updatedObj) => { 
         const updatedPokemon = {
             ...pokemon,
@@ -29,30 +49,61 @@
         updateHandler(updatedPokemon);
         clearSearchList();
     }
+    const updateStatsHandler = (e, statCode) => {
+        const { baseStats, ev, iv } = pokemon;
+        if(statCode === 'hp') {
+            updateHandler({
+                ...pokemon,
+                stats: {
+                    ...pokemon.stats,
+                    [statCode]: getHp(baseStats, ev, iv),
+                }
+            });
+        } else {
+            updateHandler({
+                ...pokemon,
+                stats: {
+                    ...pokemon.stats,
+                    [statCode]: getStat(baseStats, ev, iv, statCode),
+                }
+            });
+        }
+    }    
+    
     const selectHandler = async (selected) => {
         switch(searchType) {
             case 'name':
                 curPokemonData = selected;
                 const {name, baseStats } = selected
-                let base_stats = {}
+                let stats = {}
                 let iv = {};
                 let ev = {};
                 Object.keys(baseStats).forEach(baseStat => {
-                    base_stats[baseStat] = baseStats[baseStat];
+                    // stat 換算
                     iv[baseStat] = 31;
                     ev[baseStat] = 0;
+                    if(baseStat === 'hp') {
+                        stats[baseStat] = getHp(baseStats, ev, iv);
+                    } else {
+                        stats[baseStat] = getStat(baseStats, ev, iv, baseStat);
+                    }
                 })
                 const sprite = await fetch(`https://pokeapi.co/api/v2/pokemon/${selected.name.toLowerCase()}`)
                 .then(r => r.json())
                 .then(data => {
-                    return data.sprites.other['official-artwork'].front_default || data.sprites.front_default;
+                    return { 
+                        sprite: data.sprites.other['official-artwork'].front_default || data.sprites.front_default, 
+                        icon: data.sprites.versions['generation-viii'].icons.front_default
+                    };
                 }).catch(err => {
-                    return ''
+                    return {}
                 })
                 updatePokemonHandler({
                     name,
-                    spriteUrl: sprite,
-                    base_stats,
+                    spriteUrl: sprite.sprite,
+                    iconUrl: sprite.icon,
+                    baseStats,
+                    stats,
                     iv,
                     ev
                 });
@@ -62,6 +113,19 @@
                     { ability: selected.name }
                 )
                 break;
+            case 'item': 
+                updatePokemonHandler(
+                    { item: selected.name }
+                )
+                break;
+            case 'moves': 
+                updatePokemonHandler({ 
+                    moves: {
+                        [curMoveIdx]: selected.name
+                    } 
+                })
+                pokemonMoves[curMoveIdx] = selected.name
+                break;                
             default: 
                 break;
         }
@@ -100,7 +164,7 @@
                 <button class="col-3 btn btn-danger" on:click={deletePokemonHandler}>Delete</button>
                 <input class="col-3" type="text" placeholder="Name" bind:value={pokemon.name} on:change={searchPokemonHandler}>
                 <input class="col-3" type="text" placeholder="Ability" bind:value={pokemon.ability} on:focus={searchAbilityHandler} >
-                <input class="col-3" type="text" placeholder="Item" bind:value={pokemon.item}>
+                <input class="col-3" type="text" placeholder="Item" bind:value={pokemon.item} on:change={searchItemsHandler}>
             </div>
             {#if pokemon.spriteUrl}
                 <div class="row">
@@ -111,7 +175,7 @@
         <!-- moves -->
         <div class="col-2">
             {#each Object.keys(pokemonMoves) as moveIdx}
-                <input type="text" class="move-inputs" placeholder={`Move ${moveIdx}`} bind:value={pokemonMoves[moveIdx]}>
+                <input type="text" class="move-inputs" placeholder={`Move ${moveIdx}`} bind:value={pokemonMoves[moveIdx]} on:change={(e) => searchMovesHandler(e, moveIdx)}>
             {/each}
         </div>
         <!-- spreads -->
@@ -119,9 +183,9 @@
             {#each Object.values($stats) as stat}
                 <div class="row">
                     <p class="col-5">{stat.text}</p>
-                    <input class="col-3" type="number" placeholder='ev' bind:value={pokemon.ev[stat.code]} max={252} min={0} step={4}>
-                    <input class="col-2" type="number" placeholder='iv' bind:value={pokemon.iv[stat.code]} max={31} min={0} step={1}>
-                    <p class="col-2">{pokemon.base_stats[stat.code] || 0}</p>
+                    <input class="col-3" type="number" placeholder='ev' bind:value={pokemon.ev[stat.code]} max={252} min={0} step={4} on:change={(e) => updateStatsHandler(e, stat.code)}>
+                    <input class="col-2" type="number" placeholder='iv' bind:value={pokemon.iv[stat.code]} max={31} min={0} step={1} on:change={(e) => updateStatsHandler(e, stat.code)}>
+                    <p class="col-2">{pokemon.stats[stat.code] || 0}</p>
                 </div>
             {/each}
         </div>

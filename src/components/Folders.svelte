@@ -4,8 +4,6 @@
     import EditTeam from './EditTeam.svelte'
     import * as dex from '../data/pokedex.json'
     const nationalDex = dex.Pokedex;
-    console.log(dex)
-    console.log(nationalDex)
     let showFolders = true;
     let nowTeam = {
         folder: 0,
