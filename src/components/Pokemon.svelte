@@ -7,6 +7,7 @@
     let pokemonMoves = {};
     let searchList = [];
     let searchType = '';
+    let curPokemonData;
     Array.from({length: 4}, (v, i) => i + 1).forEach((key, idx) => {
         pokemonMoves[key] = pokemon.moves[idx] || ''
     });
@@ -14,8 +15,11 @@
         searchType = 'name';
         searchList = Object.values(nationalDex).filter(pokemon => pokemon.name.toLowerCase().includes(e.target.value.toLowerCase()))
     }
-    const searchAbilityHandler = async (e) => {
-
+    const searchAbilityHandler = () => {
+        searchType = 'ability';        
+        searchList = Object.values(curPokemonData.abilities).map(abi => {
+            return {name: abi}
+        });
     }
     const updatePokemonHandler = (updatedObj) => { 
         const updatedPokemon = {
@@ -28,6 +32,7 @@
     const selectHandler = async (selected) => {
         switch(searchType) {
             case 'name':
+                curPokemonData = selected;
                 const {name, baseStats } = selected
                 let base_stats = {}
                 let iv = {};
@@ -50,7 +55,13 @@
                     base_stats,
                     iv,
                     ev
-                })
+                });
+                break;
+            case 'ability': 
+                updatePokemonHandler(
+                    { ability: selected.name }
+                )
+                break;
             default: 
                 break;
         }
@@ -88,7 +99,7 @@
             <div class="row">
                 <button class="col-3 btn btn-danger" on:click={deletePokemonHandler}>Delete</button>
                 <input class="col-3" type="text" placeholder="Name" bind:value={pokemon.name} on:change={searchPokemonHandler}>
-                <input class="col-3" type="text" placeholder="Ability" bind:value={pokemon.ability}>
+                <input class="col-3" type="text" placeholder="Ability" bind:value={pokemon.ability} on:focus={searchAbilityHandler} >
                 <input class="col-3" type="text" placeholder="Item" bind:value={pokemon.item}>
             </div>
             {#if pokemon.spriteUrl}

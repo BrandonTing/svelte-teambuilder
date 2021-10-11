@@ -79,7 +79,13 @@
     }
 </script>
 
-<div>
+<style>
+    .folders-container {
+        padding: 2rem 0;
+    }
+</style>
+
+<div class='folders-container'>
     {#if showFolders} 
         <button class="btn btn-primary" on:click={addFolderHandler}>Add Folder</button>
         {#each folders as folder, i}
