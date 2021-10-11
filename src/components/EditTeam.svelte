@@ -22,7 +22,7 @@
                         4: '',
                     },
                     spriteUrl: '',
-                    baseStats,
+                    baseStats: {},
                     ev: {},
                     iv: {},
                     stats: {},
