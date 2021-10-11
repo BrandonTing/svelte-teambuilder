@@ -20,17 +20,18 @@
     }
     //get from local store 
     let folders = [];
-    $: localStorage.setItem('folders', JSON.stringify(folders))
     onMount(() => {
-        const existedFolders = localStorage.getItem('folders');
+        const existedFolders = localStorage.getItem('folders') || "[]";
         folders = JSON.parse(existedFolders); 
     });
 
     const addFolderHandler = () => {
         folders = [...folders, {name: 'default', teams: []}]
+        $: localStorage.setItem('folders', JSON.stringify(folders))
     }
     const deleteFolderHandler = (i) => {
         folders = folders.filter((item, index) => i !== index);
+        $: localStorage.setItem('folders', JSON.stringify(folders))
     }
     const setFolderHandler = (updatedFolder, i) => {
         folders = folders.map((folder, index) => {
@@ -40,6 +41,7 @@
                 return folder
             }
         })
+        $: localStorage.setItem('folders', JSON.stringify(folders))
     }
     const moveTeamHandler = (team, newIdx) => {
         folders = folders.map((folder, index) => {
@@ -55,8 +57,10 @@
                 return folder
             }
         })
+        $: localStorage.setItem('folders', JSON.stringify(folders))
     }
     const updateTeamHandler = (updatedTeam) => {
+        // TODO 存localstore
         folders = folders.map((folder, i) => {
             if(i !== nowTeam.folder) {
                 return folder
@@ -74,6 +78,7 @@
                 }          
             }
         })
+        $: localStorage.setItem('folders', JSON.stringify(folders))
     }
 </script>
 
