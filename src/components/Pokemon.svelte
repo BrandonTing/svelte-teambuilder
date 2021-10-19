@@ -60,11 +60,17 @@
                 }
             });
         } else {
+            const { nature} = pokemon;
+            const { minus, plus } = nature;
+            let natureModify = 1;
+            if(statCode === minus) natureModify = 0.9;
+            if(statCode === plus) natureModify = 1.1;
+            
             updateHandler({
                 ...pokemon,
                 stats: {
                     ...pokemon.stats,
-                    [statCode]: getStat(baseStats, ev, iv, statCode),
+                    [statCode]: getStat(baseStats, ev, iv, statCode, natureModify),
                 }
             });
         }
@@ -132,6 +138,34 @@
     const clearSearchList = () => {
         searchList = []
     }
+    const changeNature = (type, stat) => {
+        const { baseStats, ev, iv, stats, nature } = pokemon;
+        const updatedStats = {};
+        for(let statCode in stats) {
+            if(statCode === stat) {
+                let natureModify = 1;
+                if(type === 'minus') natureModify = 0.9;
+                if(type === 'plus') natureModify = 1.1;
+                updatedStats[stat] = getStat(baseStats, ev, iv, stat, natureModify);
+            } else {
+                let natureModify = 1;
+                if(type === 'minus' && nature['plus'] === statCode) {
+                    natureModify = 1.1
+                } else if (type === 'plus' && nature['minus'] === statCode) {
+                    natureModify = 0.9
+                }
+                updatedStats[statCode] = getStat(baseStats, ev, iv, statCode, natureModify);
+            }
+        }
+        updateHandler({
+            ...pokemon,
+            nature: {
+                ...nature,
+                [type]: stat,
+            },
+            stats: {...updatedStats}
+        });
+    }
 </script>
 
 <style>
@@ -187,6 +221,23 @@
                     <p class="col-2">{pokemon.stats[stat.code] || 0}</p>
                 </div>
             {/each}
+            <div class="row">
+                <label for="plus-stat" class="col-3">+ nature</label>
+                <select class="col-3" id="plus-stat" on:blur={(e) => changeNature('plus', e.target.value)}>
+                    <option value=''>pls select</option>
+                    {#each Object.values($stats).filter(stat => stat.text !== 'hp') as stat}
+                        <option value={stat.code}>{stat.text}</option>
+                    {/each}
+                </select>
+                <label for="minus-stat" class="col-3">- nature</label>
+                <select class="col-3" id="minus-stat" on:blur={(e) => changeNature('minus', e.target.value)}>
+                    <option value=''>pls select</option>
+                    {#each Object.values($stats).filter(stat => stat.text !== 'hp') as stat}
+                        <option value={stat.code}>{stat.text}</option>
+                    {/each}
+                </select>
+
+            </div>
         </div>
     </div>
     {#if searchList.length}

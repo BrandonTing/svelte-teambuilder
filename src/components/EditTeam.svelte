@@ -29,6 +29,10 @@
                     ev: {},
                     iv: {},
                     stats: {},
+                    nature: {
+                        plus: '',
+                        minus: ''
+                    }
                 }
             ]
         };
