@@ -80,6 +80,14 @@
         showPaste = true;
     }
     const closePasteHandler = () => { showPaste = false }
+    const updateTeamNoteHandler = (e) => {
+        const updatedTeam = {
+            ...nowTeam, 
+            note: e.target.value
+        }
+        updateTeamHandler(updatedTeam)
+
+    }
 </script>
 
 <style>
@@ -107,4 +115,6 @@
         <Pokemon nationalDex={nationalDex} pokemon={pokemon} deletePokemonHandler={() => deletePokemonHandler(i)} updateHandler={(updatedPokemon) => updatePokemonHandler(i, updatedPokemon)} />
     {/each}
 {/if}
+<h5>Note</h5>
+<textarea on:change={updateTeamNoteHandler} placeholder="Type in your note of this team">{nowTeam.note}</textarea>
 

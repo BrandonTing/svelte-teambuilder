@@ -140,10 +140,10 @@
     const clearSearchList = () => {
         searchList = []
     }
-    const changeNature = (natureName) => {
-        const { baseStats, ev, iv, stats, nature } = pokemon;
+    const changeNature = (nature) => {
+        const { baseStats, ev, iv, stats } = pokemon;
         const updatedStats = {};
-        const { name, plus, minus } = natures.Natures[natureName];
+        const { name, plus, minus } = natures.Natures[nature];
         for(let statCode in stats) {
             if(statCode === plus) {
                 const natureModify = 1.1;

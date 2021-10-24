@@ -1,13 +1,13 @@
 <script>
     import Team from './Team.svelte'
-    export let name;
-    export let teams
+    export let folder;
     export let index;
     export let deleteHandler;
     export let setHandler;
     export let folders;
     export let moveTeamHandler;
     export let toggleShowFoldersHandler;
+    const { name, teams, note } = folder;
     let folderName = name;
     let showRename = false;
     const toggleExpandHandler = (e) => {
@@ -38,10 +38,12 @@
             teams: [
                 {
                     name: 'untitled',
-                    pokemons: []
+                    pokemons: [],
+                    note: ''
                 }, 
                 ...teams
-            ]
+            ],
+            note: ''
         }
         setHandler(updatedFolder, index)
     };
@@ -64,6 +66,15 @@
             }),
         }
         setHandler(updatedFolder, index)
+    }
+    const updateFolderNoteHandler = (e) => {
+        const updatedFolder = {
+            name,
+            teams,
+            note: e.target.value
+        }
+        setHandler(updatedFolder, index)
+
     }
 </script>
 
@@ -105,6 +116,8 @@
                     moveTeamHandler={moveTeamHandler}
                     toggleShowDetailHandler={() => toggleShowFoldersHandler(false, index, i)} />
             {/each}
+            <h5>Note</h5>
+            <textarea class="w-100" on:change={updateFolderNoteHandler} placeholder="Type in your note of this folder">{note}</textarea>
         </div>
     </div>
 </div>

@@ -26,7 +26,7 @@
     });
 
     const addFolderHandler = () => {
-        folders = [...folders, {name: 'default', teams: []}]
+        folders = [...folders, {name: 'default', teams: [], note: ''}]
         $: localStorage.setItem('folders', JSON.stringify(folders))
     }
     const deleteFolderHandler = (i) => {
@@ -60,7 +60,6 @@
         $: localStorage.setItem('folders', JSON.stringify(folders))
     }
     const updateTeamHandler = (updatedTeam) => {
-        // TODO 存localstore
         folders = folders.map((folder, i) => {
             if(i !== nowTeam.folder) {
                 return folder
@@ -80,6 +79,7 @@
         })
         $: localStorage.setItem('folders', JSON.stringify(folders))
     }
+
 </script>
 
 <style>
@@ -94,8 +94,7 @@
         {#each folders as folder, i}
             <Folder 
                 folders={folders} 
-                name={folder.name} 
-                teams={folder.teams} 
+                folder={folder}
                 index={i} 
                 deleteHandler={deleteFolderHandler} 
                 setHandler={setFolderHandler}
