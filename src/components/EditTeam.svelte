@@ -29,10 +29,7 @@
                     ev: {},
                     iv: {},
                     stats: {},
-                    nature: {
-                        plus: '',
-                        minus: ''
-                    }
+                    nature: ''
                 }
             ]
         };
@@ -59,17 +56,27 @@
         updateTeamHandler(updatedTeam)
     }
 
-    const exportPasteHandler = () => {
-        paste = nowTeam.pokemons.map(pokemon => {
-            const { name, ability, item, moves, ev, iv, } = pokemon;
+    const getPaste = () => {
+        return nowTeam.pokemons.map(pokemon => {
+            const { name, ability, item, moves, ev, iv, nature } = pokemon;
             if(!name) return '' 
             return `
                 ${name} @ ${item}
-                Ability: ability
+                Ability: ${ability}
                 Level: 50
                 EVs: ${ev.hp} HP / ${ev.def} DEF / ${ev.spa} SpA / ${ev.spd} SpD / ${ev.spe} Spe
+                ${nature} Nature  
+                IVs: ${iv.hp} HP / ${iv.def} DEF / ${iv.spa} SpA / ${iv.spd} SpD / ${iv.spe} Spe
+                - ${moves[0]}
+                - ${moves[1]}
+                - ${moves[2]}
+                - ${moves[3]}
             `
         }).join('')
+    }
+
+    const exportPasteHandler = () => {
+        paste = getPaste();
         showPaste = true;
     }
     const closePasteHandler = () => { showPaste = false }

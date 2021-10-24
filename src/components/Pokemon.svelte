@@ -2,6 +2,7 @@
     import { stats } from './Constant.js'
     import * as items from '../data/items.json'
     import * as moves from '../data/moves.json'
+    import * as natures from '../data/natures.json'
     export let pokemon;
     export let deletePokemonHandler;
     export let nationalDex;
@@ -10,7 +11,7 @@
     let searchList = [];
     let searchType = '';
     let curMoveIdx = 0;
-    Array.from({length: 4}, (v, i) => i + 1).forEach((key, idx) => {
+    Array.from({length: 4}, (v, i) => i).forEach((key, idx) => {
         pokemonMoves[key] = pokemon.moves[idx] || ''
     });
     // [(種族值×2+個體值+努力值÷4)×Lv÷100]+10+Lv
@@ -126,6 +127,7 @@
             case 'moves': 
                 updatePokemonHandler({ 
                     moves: {
+                        ...pokemon.moves,
                         [curMoveIdx]: selected.name
                     } 
                 })
@@ -138,31 +140,25 @@
     const clearSearchList = () => {
         searchList = []
     }
-    const changeNature = (type, stat) => {
+    const changeNature = (natureName) => {
         const { baseStats, ev, iv, stats, nature } = pokemon;
         const updatedStats = {};
+        const { name, plus, minus } = natures.Natures[natureName];
         for(let statCode in stats) {
-            if(statCode === stat) {
-                let natureModify = 1;
-                if(type === 'minus') natureModify = 0.9;
-                if(type === 'plus') natureModify = 1.1;
-                updatedStats[stat] = getStat(baseStats, ev, iv, stat, natureModify);
+            if(statCode === plus) {
+                const natureModify = 1.1;
+                updatedStats[statCode] = getStat(baseStats, ev, iv, statCode, natureModify);
+            } else if (statCode === minus) {
+                const natureModify = 0.9;
+                updatedStats[statCode] = getStat(baseStats, ev, iv, statCode, natureModify);
             } else {
-                let natureModify = 1;
-                if(type === 'minus' && nature['plus'] === statCode) {
-                    natureModify = 1.1
-                } else if (type === 'plus' && nature['minus'] === statCode) {
-                    natureModify = 0.9
-                }
+                const natureModify = 1;
                 updatedStats[statCode] = getStat(baseStats, ev, iv, statCode, natureModify);
             }
         }
         updateHandler({
             ...pokemon,
-            nature: {
-                ...nature,
-                [type]: stat,
-            },
+            nature: name,
             stats: {...updatedStats}
         });
     }
@@ -208,7 +204,7 @@
         <!-- moves -->
         <div class="col-2">
             {#each Object.keys(pokemonMoves) as moveIdx}
-                <input type="text" class="move-inputs" placeholder={`Move ${moveIdx}`} bind:value={pokemonMoves[moveIdx]} on:change={(e) => searchMovesHandler(e, moveIdx)}>
+                <input type="text" class="move-inputs" placeholder={`Move ${Number(moveIdx) + 1}`} bind:value={pokemonMoves[moveIdx]} on:change={(e) => searchMovesHandler(e, moveIdx)}>
             {/each}
         </div>
         <!-- spreads -->
@@ -222,7 +218,14 @@
                 </div>
             {/each}
             <div class="row">
-                <label for="plus-stat" class="col-3">+ nature</label>
+                <label for="plus-stat" class="col-5 text-end">Natures</label>
+                <select class="col-3" id="plus-stat" on:blur={(e) => changeNature(e.target.value)}>
+                    <option value=''>pls select</option>
+                    {#each Object.keys(natures.Natures) as nature}
+                        <option value={nature}>{nature}</option>
+                    {/each}
+                </select>
+                <!-- <label for="plus-stat" class="col-3">+ nature</label>
                 <select class="col-3" id="plus-stat" on:blur={(e) => changeNature('plus', e.target.value)}>
                     <option value=''>pls select</option>
                     {#each Object.values($stats).filter(stat => stat.text !== 'hp') as stat}
@@ -235,7 +238,7 @@
                     {#each Object.values($stats).filter(stat => stat.text !== 'hp') as stat}
                         <option value={stat.code}>{stat.text}</option>
                     {/each}
-                </select>
+                </select> -->
 
             </div>
         </div>
