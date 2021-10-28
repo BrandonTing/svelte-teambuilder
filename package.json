@@ -2,11 +2,12 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://brandonting.github.io/svelte-teambuilder/",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
-    "deploy": "node ./gh-pages.js"
+    "deploy": "npm run build && gh-pages -d build"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
