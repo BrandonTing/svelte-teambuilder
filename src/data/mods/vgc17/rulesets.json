@@ -1,9 +1,0 @@
-{
-  "Formats": {
-    "alolapokedex": {
-      "effectType": "ValidatorRule",
-      "name": "Alola Pokedex",
-      "desc": "Only allows Pok&eacute;mon native to the Alola region (SUMO)"
-    }
-  }
-}

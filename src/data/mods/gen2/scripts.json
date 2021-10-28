@@ -1,7 +1,0 @@
-{
-  "Scripts": {
-    "inherit": "gen3",
-    "gen": 2,
-    "pokemon": {}
-  }
-}
