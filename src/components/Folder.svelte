@@ -1,13 +1,14 @@
 <script>
     import Team from './Team.svelte'
-    export let folder;
     export let index;
     export let deleteHandler;
     export let setHandler;
     export let folders;
     export let moveTeamHandler;
     export let toggleShowFoldersHandler;
-    const { name, teams, note } = folder;
+    export let name;
+    export let teams;
+    export let note;
     let folderName = name;
     let showRename = false;
     const toggleExpandHandler = (e) => {

@@ -94,7 +94,9 @@
         {#each folders as folder, i}
             <Folder 
                 folders={folders} 
-                folder={folder}
+                name={folder.name}
+                teams={folder.teams}
+                note={folder.note}
                 index={i} 
                 deleteHandler={deleteFolderHandler} 
                 setHandler={setFolderHandler}
