@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import { stats } from './Constant.js'
     import * as items from '../data/items.json'
     import * as moves from '../data/moves.json'
@@ -144,6 +145,7 @@
         const { baseStats, ev, iv, stats } = pokemon;
         const updatedStats = {};
         const { name, plus, minus } = natures.Natures[nature];
+        
         for(let statCode in stats) {
             if(statCode === plus) {
                 const natureModify = 1.1;
@@ -162,6 +164,32 @@
             stats: {...updatedStats}
         });
     }
+    const updateStats = (baseStats, ev, iv, stats, nature) => {
+        const updatedStats = {};
+        const { plus, minus } = natures.Natures[nature.toLowerCase()];
+        for(let statCode in stats) {
+            if(statCode === plus) {
+                const natureModify = 1.1;
+                updatedStats[statCode] = getStat(baseStats, ev, iv, statCode, natureModify);
+            } else if (statCode === minus) {
+                const natureModify = 0.9;
+                updatedStats[statCode] = getStat(baseStats, ev, iv, statCode, natureModify);
+            } else if(statCode === 'hp') {
+                updatedStats.hp =  getHp(baseStats, ev, iv)
+            } else {
+                const natureModify = 1;
+                updatedStats[statCode] = getStat(baseStats, ev, iv, statCode, natureModify);
+            }
+        }
+        updateHandler({
+            ...pokemon,
+            stats: {...updatedStats}
+        });
+    }
+    onMount(() => {
+        const { baseStats, ev, iv, stats, nature } = pokemon;
+        updateStats(baseStats, ev, iv, stats, nature)
+    });
 </script>
 
 <style>
