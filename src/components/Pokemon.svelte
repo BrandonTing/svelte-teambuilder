@@ -166,7 +166,7 @@
     }
     const updateStats = (baseStats, ev, iv, stats, nature) => {
         const updatedStats = {};
-        const { plus, minus } = natures.Natures[nature.toLowerCase()];
+        const { plus, minus } = natures.Natures[nature.toLowerCase()] || {};
         for(let statCode in stats) {
             if(statCode === plus) {
                 const natureModify = 1.1;
